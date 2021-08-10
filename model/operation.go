@@ -1,6 +1,6 @@
 package model
 
-type RecentBuyOperation struct {
+type RecentOperation struct {
 	Id         int     `json:"id"`
 	UserId     int     `json:"userid"`
 	CoinSymbol string  `json:"coinsymbol"`

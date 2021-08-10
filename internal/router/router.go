@@ -1,15 +1,16 @@
 package router
 
 import (
+	"github.com/coineus/coineus-server/internal/storage"
 	"github.com/gofiber/fiber/v2"
 )
 
 type Router struct {
 	router *fiber.App
-	store  *storage.Repository
+	store  *storage.Store
 }
 
-func New(s *storage.Repository) *Router {
+func New(s *storage.Store) *Router {
 	r := &Router{
 		router: fiber.New(),
 		store:  s,

@@ -1,36 +1,48 @@
 package storage
 
 import (
-	"github.com/coineus/coineus-server/internal/config"
+	"context"
+	"log"
+
 	"github.com/coineus/coineus-server/internal/storage/archivedOperation"
 	"github.com/coineus/coineus-server/internal/storage/recentOperation"
 	"github.com/coineus/coineus-server/internal/storage/user"
 	"github.com/coineus/coineus-server/internal/storage/wallet"
 	"github.com/coineus/coineus-server/internal/storage/walletOperation"
-	"github.com/jinzhu/gorm"
+	"github.com/jackc/pgx/v4/pgxpool"
 )
 
 type Database struct {
-	db          *gorm.DB
-	archivedOps ArchivedOperationStore
-	recentOps   RecentOperationStore
-	users       UserStore
-	wallets     WalletStore
-	walletOps   WalletOperationStore
+	Db          *pgxpool.Pool
+	ArchivedOps ArchivedOperationStore
+	RecentOps   RecentOperationStore
+	Users       UserStore
+	Wallets     WalletStore
+	WalletOps   WalletOperationStore
 }
 
 //Db connection and configuration
-func ConnectDB(config *config.DatabaseConfiguration) {
-
+func CreatePool(connString string) *pgxpool.Pool {
+	config, err := pgxpool.ParseConfig(connString)
+	if err != nil {
+		log.Println("db conn err. parse config fail : ", err)
+	}
+	config.MinConns = 2
+	config.MaxConns = 8
+	pool, err := pgxpool.ConnectConfig(context.Background(), config)
+	if err != nil {
+		log.Println("db conn err : ", err)
+	}
+	return pool
 }
 
-func New(db *gorm.DB) *Database {
+func New(db *pgxpool.Pool) *Database {
 	return &Database{
-		db:          db,
-		users:       user.NewRepository(db),
-		archivedOps: archivedOperation.NewRepository(db),
-		recentOps:   recentOperation.NewRepository(db),
-		wallets:     wallet.NewRepository(db),
-		walletOps:   walletOperation.NewRepository(db),
+		Db:          db,
+		Users:       user.NewRepository(db),
+		ArchivedOps: archivedOperation.NewRepository(db),
+		RecentOps:   recentOperation.NewRepository(db),
+		Wallets:     wallet.NewRepository(db),
+		WalletOps:   walletOperation.NewRepository(db),
 	}
 }

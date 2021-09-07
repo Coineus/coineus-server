@@ -27,7 +27,7 @@ func (rp *Repository) AddRecentOperation(operation model.RecentOperation) error 
 	return err
 }
 
-func (rp *Repository) GetAllRecentOperations(userId int) ([]model.RecentOperation, error) {
+func (rp *Repository) GetAllRecentOperations(userId string) ([]model.RecentOperation, error) {
 	var operations []model.RecentOperation
 
 	rows, err := rp.db.Query(context.Background(), "select created_at, buy_cost, coin_amount, coin_symbol, user_id, hash_id from recent_operations where user_id = $1", userId)
@@ -50,7 +50,7 @@ func (rp *Repository) GetAllRecentOperations(userId int) ([]model.RecentOperatio
 	return operations, err
 }
 
-func (rp *Repository) GetRecentOperationById(userId int, id int) (model.RecentOperation, error) {
+func (rp *Repository) GetRecentOperationById(userId string, id string) (model.RecentOperation, error) {
 	var operation model.RecentOperation
 
 	row := rp.db.QueryRow(context.Background(), "select created_at, buy_cost, coin_amount, coin_symbol, user_id, hash_id from recent_operations where hash_id = $1 and user_id = $2", id, userId)

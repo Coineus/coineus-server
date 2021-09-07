@@ -31,22 +31,22 @@ func (r *Router) initRoutes() {
 	//api grouping
 	apiRouter := r.router.Group("")
 
-	//api healthcheck
-	// apiRouter.Get("/healthcheck")
-
 	//api auth
-	apiRouter.Post("/register", api.RegisterHandler(*r.store))
-	apiRouter.Post("/login", api.LoginHandler(*r.store))
-
+	apiRouter.Post("/register", api.RegisterHandler(r.store.Users))
+	apiRouter.Post("/login", api.LoginHandler(r.store.Users))
 	r.router.Use(jwtware.New(jwtware.Config{
 		SigningKey: []byte(os.Getenv("JWT_SIGNING_KEY")),
 	}))
-	// //Recent Buy Operations
-	// apiRouter.Get("/operations/get/id::id")
-	// apiRouter.Get("/operations/getall")
-	// apiRouter.Post("/operations/add")
-	// apiRouter.Post("/operations/delete")
-	// apiRouter.Post("/operations/update")
+
+	//api healthcheck
+	apiRouter.Get("/healthcheck", api.HealtCheckHandler(*r.store))
+
+	//Recent Buy Operations
+	apiRouter.Get("/operations/get/:id", api.GetOperationByIdHandler(r.store.RecentOps))
+	apiRouter.Get("/operations/getall", api.GetAllOperationsByUserIdHandler(r.store.RecentOps))
+	apiRouter.Post("/operations/add", api.AddOperationHandler(r.store.RecentOps))
+	apiRouter.Post("/operations/delete", api.DeleteOperationHandler(r.store.RecentOps))
+	apiRouter.Post("/operations/update", api.UpdateOperationHandler(r.store.RecentOps))
 
 	// //Archived Buy Operations
 	// apiRouter.Get("/archivedoperations/getall")

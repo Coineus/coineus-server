@@ -2,15 +2,22 @@ package app
 
 import (
 	"log"
+	"net/mail"
 	"os"
 	"strconv"
 	"time"
 
+	"github.com/coineus/coineus-server/model"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt"
 	uuid "github.com/nu7hatch/gouuid"
 	"golang.org/x/crypto/bcrypt"
 )
+
+func ValidateUser(user model.User) bool {
+	_, err := mail.ParseAddress(user.Email)
+	return !(err != nil || len(user.UserName) <= 3 || len(user.Password) <= 7)
+}
 
 func CreateUUID() string {
 	id, err := uuid.NewV4()
@@ -20,7 +27,7 @@ func CreateUUID() string {
 	return id.String()
 }
 
-func CreateToken(userId int, mail, username string) (string, error) {
+func CreateToken(userId string, mail, username string) (string, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 
 	claims := token.Claims.(jwt.MapClaims)
@@ -38,13 +45,18 @@ func CreateToken(userId int, mail, username string) (string, error) {
 	return t, nil
 }
 
-func CheckPasswordHash(pass, hashedPass string) bool {
+func CheckPasswordHash(pass string, hashedPass string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hashedPass), []byte(pass))
 	return err == nil
 }
 
-func GetUserClaims(c *fiber.Ctx) jwt.MapClaims {
+func GetUserClaims(c *fiber.Ctx) model.User {
 	user := c.Locals("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
-	return claims
+	userModel := model.User{
+		Id:       claims["uid"].(string),
+		UserName: claims["uname"].(string),
+		Email:    claims["email"].(string),
+	}
+	return userModel
 }

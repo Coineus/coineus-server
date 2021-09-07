@@ -21,5 +21,7 @@ func main() {
 
 func init() {
 	err := config.GetConfig()
-	log.Fatal("config fail : ", err)
+	if err != nil {
+		log.Fatal("config fail : ", err)
+	}
 }

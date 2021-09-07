@@ -19,7 +19,7 @@ func NewRepository(db *pgxpool.Pool) *Repository {
 func (rp *Repository) AddArchivedOperation(operation model.ArchivedOperation) error {
 	uuid := app.CreateUUID()
 	_, err := rp.db.Exec(context.Background(), "insert into archived_operations (archived_at, created_at, sell_cost, buy_cost, coin_amount, coin_symbol, user_id, hash_id) values (now(), $1, $2, $3, $4, $5, $6, $7);",
-		operation.CreatedAt.String(),
+		operation.CreatedAt,
 		operation.SellCost,
 		operation.BuyCost,
 		operation.CoinAmount,
@@ -30,7 +30,7 @@ func (rp *Repository) AddArchivedOperation(operation model.ArchivedOperation) er
 	return err
 }
 
-func (rp *Repository) GetAllArchivedOperations(userId int) ([]model.ArchivedOperation, error) {
+func (rp *Repository) GetAllArchivedOperations(userId string) ([]model.ArchivedOperation, error) {
 	var operations []model.ArchivedOperation
 	rows, err := rp.db.Query(context.Background(), "select archived_at, created_at, sell_cost, buy_cost, coin_amount, coin_symbol, user_id, hash_id from archived_operations where user_id = $1;", userId)
 	if err != nil {
@@ -54,7 +54,7 @@ func (rp *Repository) GetAllArchivedOperations(userId int) ([]model.ArchivedOper
 	return operations, err
 }
 
-func (rp *Repository) GetArchivedOperationById(userId int, id int) (model.ArchivedOperation, error) {
+func (rp *Repository) GetArchivedOperationById(userId string, id string) (model.ArchivedOperation, error) {
 	var operation model.ArchivedOperation
 	row := rp.db.QueryRow(context.Background(), "select archived_at, created_at, sell_cost, buy_cost, coin_amount, coin_symbol, user_id, hash_id from archived_operations where user_id = $1 and hash_id $2;", userId, id)
 	err := row.Scan(&operation.CreatedAt,

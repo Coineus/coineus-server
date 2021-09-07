@@ -25,7 +25,7 @@ func (rp *Repository) AddWallet(wallet model.Wallet) error {
 	return err
 }
 
-func (rp *Repository) GetAllWallets(userId int) ([]model.Wallet, error) {
+func (rp *Repository) GetAllWallets(userId string) ([]model.Wallet, error) {
 	var wallets []model.Wallet
 
 	rows, err := rp.db.Query(context.Background(), "select hash_id, name, user_id from wallets where user_id = $1", userId)
@@ -45,7 +45,7 @@ func (rp *Repository) GetAllWallets(userId int) ([]model.Wallet, error) {
 
 }
 
-func (rp *Repository) GetWalletById(userId int, id int) (model.Wallet, error) {
+func (rp *Repository) GetWalletById(userId string, id string) (model.Wallet, error) {
 	var wallet model.Wallet
 
 	row := rp.db.QueryRow(context.Background(), "select hash_id, name, user_id from wallets where user_id = $1 and hash_id = $2", userId, id)

@@ -22,7 +22,7 @@ func (rp *Repository) AddWalletOperation(walletOperation model.WalletOperation) 
 	return err
 }
 
-func (rp *Repository) GetAllWalletOperation(walletId int) ([]model.WalletOperationDTO, error) {
+func (rp *Repository) GetAllWalletOperation(walletId string) ([]model.WalletOperationDTO, error) {
 	var walletOps []model.WalletOperationDTO
 
 	rows, err := rp.db.Query(context.Background(),
@@ -51,7 +51,7 @@ func (rp *Repository) DeleteWalletOperation(walletOperation model.WalletOperatio
 	return err
 }
 
-func (rp *Repository) DeleteAllWalletOperations(walletIdToDelete int) error {
+func (rp *Repository) DeleteAllWalletOperations(walletIdToDelete string) error {
 	_, err := rp.db.Exec(context.Background(), "delete from wallet_operations where wallet_id = $1", walletIdToDelete)
 	return err
 }

@@ -8,8 +8,8 @@ type Wallet struct {
 
 type WalletOperation struct {
 	Id          string `json:"id"`
-	WalletId    int    `json:"walletid"`
-	OperationId int    `json:"operationid"`
+	WalletId    string `json:"walletid"`
+	OperationId string `json:"operationid"`
 }
 
 type WalletOperationDTO struct {

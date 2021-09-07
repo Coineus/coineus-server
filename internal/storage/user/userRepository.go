@@ -36,8 +36,8 @@ func (rp *Repository) AddUser(user model.User) error {
 func (rp *Repository) GetByMail(mail string) (model.DBUser, error) {
 	var dbUser model.DBUser
 	row := rp.db.QueryRow(context.Background(), "select password_hash, email, created_at, username, hash_id from users where email = $1 ;", mail)
-	row.Scan(&dbUser.PasswordHash, &dbUser.Email, &dbUser.CreatedAt, dbUser.UserName, dbUser.Id)
-	return model.DBUser{}, nil
+	err := row.Scan(&dbUser.PasswordHash, &dbUser.Email, &dbUser.CreatedAt, &dbUser.UserName, &dbUser.Id)
+	return dbUser, err
 }
 
 func (rp *Repository) DeleteUser(user model.User) error {

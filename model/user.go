@@ -14,11 +14,11 @@ type User struct {
 }
 
 type DBUser struct {
-	Id           string
-	UserName     string
-	CreatedAt    time.Time
-	Email        string
-	PasswordHash string
+	Id           string    `json:"id"`
+	UserName     string    `json:"username"`
+	CreatedAt    time.Time `json:"created_at"`
+	Email        string    `json:"email"`
+	PasswordHash string    `json:"password"`
 }
 
 func (u User) HashPassword() (DBUser, error) {

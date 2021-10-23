@@ -2,7 +2,7 @@ package model
 
 type Wallet struct {
 	Id     string `json:"id"`
-	UserId int    `json:"userid"`
+	UserId string `json:"userid"`
 	Name   string `json:"name"`
 }
 

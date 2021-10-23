@@ -6,6 +6,7 @@ import (
 	"github.com/coineus/coineus-server/internal/api"
 	"github.com/coineus/coineus-server/internal/storage"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	jwtware "github.com/gofiber/jwt/v2"
 )
 
@@ -31,6 +32,9 @@ func (r *Router) initRoutes() {
 	//api grouping
 	apiRouter := r.router.Group("")
 
+	//api cors
+	apiRouter.Use(cors.New())
+
 	//api auth
 	apiRouter.Post("/register", api.RegisterHandler(r.store.Users))
 	apiRouter.Post("/login", api.LoginHandler(r.store.Users))
@@ -48,28 +52,28 @@ func (r *Router) initRoutes() {
 	apiRouter.Post("/operations/delete", api.DeleteOperationHandler(r.store.RecentOps))
 	apiRouter.Post("/operations/update", api.UpdateOperationHandler(r.store.RecentOps))
 
-	// //Archived Buy Operations
-	// apiRouter.Get("/archivedoperations/getall")
-	// apiRouter.Get("/archivedOperations/get/id::id")
-	// apiRouter.Post("/archivedoperations/add")
-	// apiRouter.Post("/archivedOperations/delete")
+	//Archived Buy Operations
+	apiRouter.Get("/archivedoperations/getall", api.GetAllArchivedOperationsByUserIdHandler(r.store.ArchivedOps))
+	apiRouter.Get("/archivedOperations/get/:id", api.AddArchivedOperationHandler(r.store.ArchivedOps))
+	apiRouter.Post("/archivedoperations/add", api.AddArchivedOperationHandler(r.store.ArchivedOps))
+	apiRouter.Post("/archivedOperations/delete", api.DeleteArchivedOperationHandler(r.store.ArchivedOps))
 
-	// //Wallet
-	// apiRouter.Get("/wallets/getall")
-	// apiRouter.Get("/wallets/getbyid")
-	// apiRouter.Post("/wallets/add")
-	// apiRouter.Post("/wallets/delete")
-	// //update eklenecek
+	//Wallet
+	apiRouter.Get("/wallets/getall", api.GetAllWalletsByUserIdHandler(r.store.Wallets))
+	apiRouter.Get("/wallets/getbyid", api.GetWalletByIdHandler(r.store.Wallets))
+	apiRouter.Post("/wallets/add", api.AddWalletHandler(r.store.Wallets))
+	apiRouter.Post("/wallets/delete", api.DeleteWalletHandler(r.store.Wallets, r.store.WalletOps))
+	//update eklenecek
 
-	// //Wallet Operations
-	// apiRouter.Get("/walletoperations/getall")
-	// apiRouter.Post("/walletoperations/add")
-	// apiRouter.Post("/walletoperations/delete")
+	//Wallet Operations
+	apiRouter.Get("/walletoperations/getall", api.GetAllWalletOperationsByUserIdHandler(r.store.WalletOps))
+	apiRouter.Post("/walletoperations/add", api.AddWalletOperationHandler(r.store.WalletOps))
+	apiRouter.Post("/walletoperations/delete", api.DeleteWalletOperationHandler(r.store.WalletOps))
 
-	// //User Operations
-	// apiRouter.Get("/users/getcurrentuser")
-	// apiRouter.Post("/users/update")
-	// apiRouter.Post("/users/delete")
+	//User Operations
+	apiRouter.Get("/users/getcurrentuser", api.GetUserHandler(r.store.Users))
+	apiRouter.Post("/users/update", api.UpdateUserHandler(r.store.Users))
+	apiRouter.Post("/users/delete", api.DeleteUserHandler(r.store.Users))
 
 	//Middlewares
 	//r.router.Use(LoggerMiddleware)

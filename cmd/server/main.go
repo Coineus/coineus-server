@@ -23,7 +23,7 @@ func main() {
 	if os.Getenv("PORT") != "" {
 		PORT = os.Getenv("PORT")
 	}
-	r.ServeHTTP(":" + PORT)
+	r.ServeHTTP(PORT)
 }
 
 func init() {

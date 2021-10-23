@@ -6,6 +6,7 @@ import (
 	"github.com/coineus/coineus-server/internal/api"
 	"github.com/coineus/coineus-server/internal/storage"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	jwtware "github.com/gofiber/jwt/v2"
 )
 
@@ -30,6 +31,9 @@ func (r *Router) ServeHTTP(port string) {
 func (r *Router) initRoutes() {
 	//api grouping
 	apiRouter := r.router.Group("")
+
+	//api cors
+	apiRouter.Use(cors.New())
 
 	//api auth
 	apiRouter.Post("/register", api.RegisterHandler(r.store.Users))

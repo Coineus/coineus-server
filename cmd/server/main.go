@@ -16,7 +16,7 @@ func main() {
 
 	store := storage.New(db)
 	r := router.New(store)
-	r.ServeHTTP("8000")
+	r.ServeHTTP(os.Getenv("PORT"))
 }
 
 func init() {

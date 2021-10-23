@@ -9,6 +9,10 @@ import (
 	"github.com/coineus/coineus-server/internal/storage"
 )
 
+var (
+	PORT = "8000"
+)
+
 func main() {
 	dbCfg := os.Getenv("POSTGRE_DB_URI")
 
@@ -16,7 +20,10 @@ func main() {
 
 	store := storage.New(db)
 	r := router.New(store)
-	r.ServeHTTP(os.Getenv("PORT"))
+	if os.Getenv("PORT") != "" {
+		PORT = os.Getenv("PORT")
+	}
+	r.ServeHTTP(":" + PORT)
 }
 
 func init() {

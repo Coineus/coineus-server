@@ -16,9 +16,13 @@ var (
 func main() {
 	dbCfg := os.Getenv("POSTGRE_DB_URI")
 
-	db := storage.CreatePool(dbCfg)
+	db, err := storage.CreatePool(dbCfg)
+	if err != nil {
+		log.Fatalf("db err : %v", err)
+	}
 
 	store := storage.New(db)
+
 	r := router.New(store)
 	if os.Getenv("PORT") != "" {
 		PORT = os.Getenv("PORT")

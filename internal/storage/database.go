@@ -2,7 +2,6 @@ package storage
 
 import (
 	"context"
-	"log"
 
 	"github.com/coineus/coineus-server/internal/storage/archivedOperation"
 	"github.com/coineus/coineus-server/internal/storage/recentOperation"
@@ -22,18 +21,18 @@ type Database struct {
 }
 
 //Db connection and configuration
-func CreatePool(connString string) *pgxpool.Pool {
+func CreatePool(connString string) (*pgxpool.Pool, error) {
 	config, err := pgxpool.ParseConfig(connString)
 	if err != nil {
-		log.Println("db conn err. parse config fail : ", err)
+		return nil, err
 	}
 	config.MinConns = 2
 	config.MaxConns = 8
 	pool, err := pgxpool.ConnectConfig(context.Background(), config)
 	if err != nil {
-		log.Println("db conn err : ", err)
+		return nil, err
 	}
-	return pool
+	return pool, nil
 }
 
 func New(db *pgxpool.Pool) *Database {

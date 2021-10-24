@@ -7,6 +7,7 @@ import (
 	"github.com/coineus/coineus-server/internal/storage"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	jwtware "github.com/gofiber/jwt/v2"
 )
 
@@ -32,8 +33,15 @@ func (r *Router) initRoutes() {
 	//api grouping
 	apiRouter := r.router.Group("")
 
-	//api cors
+	// Middlewares
+	// CORS
 	apiRouter.Use(cors.New())
+	// Logger
+	apiRouter.Use(logger.New(
+		logger.Config{
+			Output: os.Stdout,
+		},
+	))
 
 	//api auth
 	apiRouter.Post("/register", api.RegisterHandler(r.store.Users))
@@ -74,7 +82,4 @@ func (r *Router) initRoutes() {
 	apiRouter.Get("/users/getcurrentuser", api.GetUserHandler(r.store.Users))
 	apiRouter.Post("/users/update", api.UpdateUserHandler(r.store.Users))
 	apiRouter.Post("/users/delete", api.DeleteUserHandler(r.store.Users))
-
-	//Middlewares
-	//r.router.Use(LoggerMiddleware)
 }

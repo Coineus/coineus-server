@@ -45,15 +45,15 @@ func (r *Router) initRoutes() {
 		},
 	))
 
+	// Api healthcheck
+	apiRouter.Get("/healthcheck", api.HealtCheckHandler(*r.store))
+
 	//api auth
 	apiRouter.Post("/register", api.RegisterHandler(r.store.Users))
 	apiRouter.Post("/login", api.LoginHandler(r.store.Users))
 	r.router.Use(jwtware.New(jwtware.Config{
 		SigningKey: []byte(os.Getenv("JWT_SIGNING_KEY")),
 	}))
-
-	//api healthcheck
-	apiRouter.Get("/healthcheck", api.HealtCheckHandler(*r.store))
 
 	//Recent Buy Operations
 	apiRouter.Get("/operations/get/:id", api.GetOperationByIdHandler(r.store.RecentOps))

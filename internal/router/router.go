@@ -2,6 +2,7 @@ package router
 
 import (
 	"os"
+	"time"
 
 	"github.com/coineus/coineus-server/internal/api"
 	"github.com/coineus/coineus-server/internal/storage"
@@ -39,6 +40,7 @@ func (r *Router) initRoutes() {
 	// Logger
 	apiRouter.Use(logger.New(
 		logger.Config{
+			Format: time.Now().Format("2006-01-02 15:04:05") + " - [${ip}] ${method} ${status} | ${path}\n",
 			Output: os.Stdout,
 		},
 	))

@@ -19,7 +19,7 @@ type ArchivedOperationStore interface {
 
 type UserStore interface {
 	AddUser(user model.User) error
-	GetByMail(mail string) (model.DBUser, error)
+	GetByMail(mail string) (model.UserDTO, error)
 	DeleteUser(user model.User) error
 	UpdateUser(user model.User) error
 }

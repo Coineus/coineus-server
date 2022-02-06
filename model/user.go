@@ -13,7 +13,7 @@ type User struct {
 	Password string `json:"password"`
 }
 
-type DBUser struct {
+type UserDTO struct {
 	Id           string    `json:"id"`
 	UserName     string    `json:"username"`
 	CreatedAt    time.Time `json:"created_at"`
@@ -21,9 +21,9 @@ type DBUser struct {
 	PasswordHash string    `json:"password"`
 }
 
-func (u User) HashPassword() (DBUser, error) {
+func (u User) HashPassword() (UserDTO, error) {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(u.Password), 14)
-	return DBUser{
+	return UserDTO{
 		Id:           u.Id,
 		UserName:     u.UserName,
 		Email:        u.Email,

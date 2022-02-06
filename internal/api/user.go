@@ -14,7 +14,7 @@ func GetUserHandler(s storage.UserStore) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		userClaims := app.GetUserClaims(c)
 
-		var user model.DBUser
+		var user model.UserDTO
 
 		user, err := s.GetByMail(userClaims.Email)
 		user.PasswordHash = ""

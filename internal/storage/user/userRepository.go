@@ -17,7 +17,7 @@ func NewRepository(db *pgxpool.Pool) *Repository {
 }
 
 func (rp *Repository) AddUser(user model.User) error {
-	var dbUser model.DBUser
+	var dbUser model.UserDTO
 	dbUser, err := user.HashPassword()
 	dbUser.Id = app.CreateUUID()
 	if err != nil {
@@ -33,8 +33,8 @@ func (rp *Repository) AddUser(user model.User) error {
 	return err
 }
 
-func (rp *Repository) GetByMail(mail string) (model.DBUser, error) {
-	var dbUser model.DBUser
+func (rp *Repository) GetByMail(mail string) (model.UserDTO, error) {
+	var dbUser model.UserDTO
 	row := rp.db.QueryRow(context.Background(), "select password_hash, email, created_at, username, hash_id from users where email = $1 ;", mail)
 	err := row.Scan(&dbUser.PasswordHash, &dbUser.Email, &dbUser.CreatedAt, &dbUser.UserName, &dbUser.Id)
 	return dbUser, err

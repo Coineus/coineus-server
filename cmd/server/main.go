@@ -31,8 +31,6 @@ func main() {
 }
 
 func init() {
-	err := config.GetConfig()
-	if err != nil {
-		log.Fatal("config fail : ", err)
-	}
+	// Check error in local
+	_ = config.GetConfig()
 }

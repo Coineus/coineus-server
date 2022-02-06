@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  # coineus-api
+  coineus-api:
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile.server
+    environment:
+      - POSTGRE_DB_URI = "postgres://coineus:coineus@postgres:5432/coineus-db"
+      - JWT_SIGNING_KEY = "mysupersecretkey"
+      - JWT_EXP_TIME = 96
+    depends_on:
+      - postgres
+    networks:
+      - webnet
+
+
+  # db
+  postgres:
+    image: postgres:14
+    environment:
+      - POSTGRES_USER=coineus
+      - POSTGRES_PASSWORD=coineus
+    healthcheck:
+      test: ["CMD", "pg_isready", "-u", "coineus", "-d", "coineus-db"]
+      interval: 3s
+      retries: 5
+    ports:
+        - 5432:5432
+    volumes:
+      - ./docker/script:/docker-entrypoint-initdb.d
+    restart: always
+    networks:
+      - webnet
+
+
+networks:
+    webnet:
+      driver: bridge

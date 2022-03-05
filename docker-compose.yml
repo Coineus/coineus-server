@@ -7,23 +7,27 @@ services:
       context: ./
       dockerfile: ./docker/Dockerfile.server
     environment:
-      - POSTGRE_DB_URI = "postgres://coineus:coineus@postgres:5432/coineus-db"
-      - JWT_SIGNING_KEY = "mysupersecretkey"
-      - JWT_EXP_TIME = 96
+      POSTGRE_DB_URI: postgres://postgres:postgres@postgres:5432/coineusdb
+      JWT_SIGNING_KEY: mysupersecretkey
+      JWT_EXP_TIME: 96
+      RETRY_COUNT: 5
+      RETRY_COOLDOWN: 2
     depends_on:
       - postgres
     networks:
       - webnet
+    expose:
+      - 8000
 
 
   # db
   postgres:
     image: postgres:14
     environment:
-      - POSTGRES_USER=coineus
-      - POSTGRES_PASSWORD=coineus
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     healthcheck:
-      test: ["CMD", "pg_isready", "-u", "coineus", "-d", "coineus-db"]
+      test: ["CMD", "pg_isready", "-u", "coineus", "-d", "coineusdb"]
       interval: 3s
       retries: 5
     ports:

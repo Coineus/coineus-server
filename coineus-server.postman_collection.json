@@ -1,0 +1,371 @@
+{
+	"info": {
+		"_postman_id": "118d5419-20ea-4a87-b477-e114bcd9523a",
+		"name": "Coineus",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Recent Operation",
+			"item": [
+				{
+					"name": "DeleteRecentOperation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": \"71b03e66-d0d5-44bf-597b-dc6a50c625c7\",\r\n        \"created_at\": \"2021-09-07T20:50:12.338545Z\",\r\n        \"userid\": \"5344c077-bffb-4cb2-59e2-3ad648578628\",\r\n        \"coinsymbol\": \"BTCUSDT\",\r\n        \"coinamount\": 0.0123,\r\n        \"buycost\": 49.12\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/operations/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"operations",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetRecentOperationById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/operations/get/71b03e66-d0d5-44bf-597b-dc6a50c625c7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"operations",
+								"get",
+								"71b03e66-d0d5-44bf-597b-dc6a50c625c7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetRecentOperations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/operations/getall",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"operations",
+								"getall"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateRecentOperation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : \"3fa1b8d7-81d3-41e2-564a-23e691608eb5\",\r\n    \"userid\" : \"5344c077-bffb-4cb2-59e2-3ad648578628\",\r\n    \"coinsymbol\" : \"BTCUSDT\",\r\n    \"coinamount\" : 0.0563,\r\n    \"buycost\" : 49.10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/operations/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"operations",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddRecentOperation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userid\" : \"5344c077-bffb-4cb2-59e2-3ad648578628\",\r\n    \"coinsymbol\" : \"BTCUSDT\",\r\n    \"coinamount\" : 0.0123,\r\n    \"buycost\" : 49.12\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/operations/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"operations",
+								"add"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "mlheymen.ms@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "msr12345",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "mlheymen.ms@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "msr12345",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "msrexe",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Metrics",
+			"item": [
+				{
+					"name": "HealthCheck",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/healthcheck",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"healthcheck"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "GetCurrentUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/users/getcurrentuser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"getcurrentuser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : \"5344c077-bffb-4cb2-59e2-3ad648578628\",\r\n    \"username\" : \"msrexe_updated\",\r\n    \"password\" : \"msr12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/users/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"5344c077-bffb-4cb2-59e2-3ad648578628\",\r\n    \"username\": \"msrexe_updated\",\r\n    \"email\": \"mlheymen.ms@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/users/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1saGV5bWVuLm1zQGdtYWlsLmNvbSIsImV4cCI6NTI0MjgzNjM3NCwidWlkIjoiN2MwMTYwYWMtZmVjNi00NWQ4LTc0YzktZWRiMDRlMzhlZjdmIiwidW5hbWUiOiJtc3JleGUifQ.dLAjHx-MWhW9nU38jZKUVfbqt1noBxEzIRHA-pXCtZQ",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

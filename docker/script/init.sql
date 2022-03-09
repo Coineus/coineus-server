@@ -1,5 +1,3 @@
-CREATE DATABASE coineusdb;
-
 CREATE TABLE users (
     hash_id   VARCHAR(500) NOT NULL,
     username    VARCHAR(100) NOT NULL,

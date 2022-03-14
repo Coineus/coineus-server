@@ -23,12 +23,11 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/operations/delete",
+							"raw": "http://{{TESTAPI}}/operations/delete",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{TESTAPI}}"
 							],
-							"port": "8000",
 							"path": [
 								"operations",
 								"delete"
@@ -43,12 +42,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8000/operations/get/71b03e66-d0d5-44bf-597b-dc6a50c625c7",
+							"raw": "http://{{TESTAPI}}/operations/get/71b03e66-d0d5-44bf-597b-dc6a50c625c7",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{TESTAPI}}"
 							],
-							"port": "8000",
 							"path": [
 								"operations",
 								"get",
@@ -64,12 +62,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8000/operations/getall",
+							"raw": "http://{{TESTAPI}}/operations/getall",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{TESTAPI}}"
 							],
-							"port": "8000",
 							"path": [
 								"operations",
 								"getall"
@@ -93,12 +90,11 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/operations/update",
+							"raw": "http://{{TESTAPI}}/operations/update",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{TESTAPI}}"
 							],
-							"port": "8000",
 							"path": [
 								"operations",
 								"update"
@@ -122,12 +118,11 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/operations/add",
+							"raw": "http://{{TESTAPI}}/operations/add",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{TESTAPI}}"
 							],
-							"port": "8000",
 							"path": [
 								"operations",
 								"add"
@@ -169,12 +164,11 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8000/login",
+							"raw": "http://{{TESTAPI}}/login",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{TESTAPI}}"
 							],
-							"port": "8000",
 							"path": [
 								"login"
 							]
@@ -208,12 +202,11 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8000/register",
+							"raw": "http://{{TESTAPI}}/register",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{TESTAPI}}"
 							],
-							"port": "8000",
 							"path": [
 								"register"
 							]
@@ -239,12 +232,11 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8000/healthcheck",
+							"raw": "http://{{TESTAPI}}/healthcheck",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{TESTAPI}}"
 							],
-							"port": "8000",
 							"path": [
 								"healthcheck"
 							]
@@ -263,12 +255,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8000/users/getcurrentuser",
+							"raw": "http://{{TESTAPI}}/users/getcurrentuser",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{TESTAPI}}"
 							],
-							"port": "8000",
 							"path": [
 								"users",
 								"getcurrentuser"
@@ -292,12 +283,11 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/users/update",
+							"raw": "http://{{TESTAPI}}/users/update",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{TESTAPI}}"
 							],
-							"port": "8000",
 							"path": [
 								"users",
 								"update"
@@ -321,12 +311,11 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/users/delete",
+							"raw": "http://{{TESTAPI}}/users/delete",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{TESTAPI}}"
 							],
-							"port": "8000",
 							"path": [
 								"users",
 								"delete"

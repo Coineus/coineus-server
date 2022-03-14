@@ -4,7 +4,7 @@ CREATE TABLE users (
     created_at     DATE NOT NULL,
     password_hash  VARCHAR(500) NOT NULL,
     email  VARCHAR(300) NOT NULL,
-   CONSTRAINT coineus_users PRIMARY KEY (hash_id)
+   CONSTRAINT users PRIMARY KEY (hash_id)
 );
 
 CREATE TABLE wallets (

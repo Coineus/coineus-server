@@ -11,7 +11,7 @@ pipeline{
 
     stage('docker image build'){
       steps{
-        sh "docker build -t $IMAGE_NAME:latest ."
+        sh "docker image build -t $IMAGE_NAME:latest -f ./docker/Dockerfile.server ."
       }
     }
 
@@ -19,8 +19,8 @@ pipeline{
       steps{
         sh "echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin"
         sh "docker tag $IMAGE_NAME:latest $IMAGE_NAME:$BUILD_NUMBER"
-        sh "docker push $IMAGE_NAME:$BUILD_NUMBER"
         sh "docker push $IMAGE_NAME:latest"
+        sh "docker push $IMAGE_NAME:$BUILD_NUMBER"
         sh "docker rmi $IMAGE_NAME:$BUILD_NUMBER $IMAGE_NAME:latest"
       }
     }

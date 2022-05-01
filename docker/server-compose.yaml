@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  # coineus-api
+  coineus-api:
+    image: "safderun/coineus-server:latest"
+    environment:
+      POSTGRE_DB_URI: postgres://postgres:postgres123@postgres:5432/coineusdb
+      JWT_SIGNING_KEY: mysupersecretkey
+      JWT_EXP_TIME: 96
+      RETRY_COUNT: 5
+      RETRY_COOLDOWN: 2
+      PORT: 8000
+    networks:
+      - coineus_network
+    ports:
+      - 8000:8000
+
+
+
+networks:
+    coineus_network:
+      external: true
+      

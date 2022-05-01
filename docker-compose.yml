@@ -3,9 +3,8 @@ version: '3.8'
 services:
   # coineus-api
   coineus-api:
-    build:
-      context: ./
-      dockerfile: ./docker/Dockerfile.server
+    image: safderun/coineus-server
+    container_name: coineus-server
     environment:
       POSTGRE_DB_URI: postgres://postgres:postgres123@postgres:5432/coineusdb
       JWT_SIGNING_KEY: mysupersecretkey
@@ -16,7 +15,7 @@ services:
     depends_on:
       - postgres
     networks:
-      - webnet
+      - coineus_network
     ports:
       - 8000:8000
 
@@ -24,6 +23,7 @@ services:
   # db
   postgres:
     image: postgres:14
+    container_name: coineus-postgres
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres123
@@ -36,11 +36,19 @@ services:
         - 5432:5432
     volumes:
       - ./docker/script/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - coineus-postgre-data:/var/lib/postgresql/data
     restart: always
     networks:
-      - webnet
+      - coineus_network
+
 
 
 networks:
-    webnet:
+    coineus_network:
+      name: coineus_network
       driver: bridge
+
+volumes:
+  coineus-postgre-data:
+    name: coineus-postgre-data
+    driver: local

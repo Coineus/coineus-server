@@ -31,7 +31,7 @@ pipeline{
         SERVER_BUILD_NUMBER = "$BUILD_NUMBER"
       }
       steps{
-        sh "/coineus/updateApi.sh"
+        sh "/coineus-server/update-server.sh"
       }
     }
 

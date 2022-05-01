@@ -34,7 +34,16 @@ pipeline{
         sh "/coineus-server/update-server.sh"
       }
     }
-
-  
   }
+
+  post {
+        success {
+          mail (bcc: '', body: "Latest deploy for Coineus Server was successfull!. \n Build Number: $BUILD_NUMBER", cc: 'mlheymen.ms@gmail.com', from: 'Jenkins', replyTo: '', subject: 'Coineus Server Deploy Succesfull!', to: 'safderun@proton.me')
+        }
+        failure {
+          mail bcc: '', body: '''Latest deploy for Coineus Server was failed!. 
+          Build Number: $BUILD_NUMBER''', cc: 'mlheymen.ms@gmail.com', from: 'Jenkins', replyTo: '', subject: '!!!Coineus Server Deploy Failed!!!', to: 'safderun@proton.me'
+        }
+    }
+
 }

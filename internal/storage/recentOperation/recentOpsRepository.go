@@ -68,6 +68,24 @@ func (rp *Repository) GetRecentOperationById(userId string, id string) (model.Re
 	return operation, err
 }
 
+func (rp *Repository) GetRecentOperationByCoinSymbol(coinSymbol string) (model.RecentOperation, error) {
+	var operation model.RecentOperation
+
+	row := rp.db.QueryRow(context.Background(), "select created_at, buy_cost, coin_amount, coin_symbol, user_id, hash_id from recent_operations where coin_symbol = $1", coinSymbol)
+	err := row.Scan(
+		&operation.CreatedAt,
+		&operation.BuyCost,
+		&operation.CoinAmount,
+		&operation.CoinSymbol,
+		&operation.UserId,
+		&operation.Id,
+	)
+	if err != nil {
+		return model.RecentOperation{}, err
+	}
+	return operation, err
+}
+
 func (rp *Repository) DeleteRecentOperation(operation model.RecentOperation) error {
 	_, err := rp.db.Exec(context.Background(), "delete from recent_operations where hash_id = $1 and user_id = $2;", operation.Id, operation.UserId)
 	return err

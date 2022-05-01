@@ -6,6 +6,7 @@ type RecentOperationStore interface {
 	AddRecentOperation(operation model.RecentOperation) error
 	GetAllRecentOperations(userId string) ([]model.RecentOperation, error)
 	GetRecentOperationById(userId string, id string) (model.RecentOperation, error)
+	GetRecentOperationByCoinSymbol(coinSymbol string) (model.RecentOperation, error)
 	DeleteRecentOperation(operation model.RecentOperation) error
 	UpdateRecentOperation(operation model.RecentOperation) error
 }

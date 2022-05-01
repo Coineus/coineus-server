@@ -11,7 +11,7 @@ pipeline{
 
     stage('docker image build'){
       steps{
-        sh "docker build -t $IMAGE_NAME:latest ."
+        sh "docker image build -t $IMAGE_NAME:latest -f ./docker/Dockerfile.server ."
       }
     }
 
@@ -19,8 +19,8 @@ pipeline{
       steps{
         sh "echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin"
         sh "docker tag $IMAGE_NAME:latest $IMAGE_NAME:$BUILD_NUMBER"
-        sh "docker push $IMAGE_NAME:$BUILD_NUMBER"
         sh "docker push $IMAGE_NAME:latest"
+        sh "docker push $IMAGE_NAME:$BUILD_NUMBER"
         sh "docker rmi $IMAGE_NAME:$BUILD_NUMBER $IMAGE_NAME:latest"
       }
     }
@@ -31,10 +31,19 @@ pipeline{
         SERVER_BUILD_NUMBER = "$BUILD_NUMBER"
       }
       steps{
-        sh "/coineus/updateApi.sh"
+        sh "/coineus-server/update-server.sh"
       }
     }
-
-  
   }
+
+  post {
+        success {
+          mail (bcc: '', body: "Latest deploy for Coineus Server was successfull!. \n Build Number: $BUILD_NUMBER", cc: 'mlheymen.ms@gmail.com', from: 'Jenkins', replyTo: '', subject: 'Coineus Server Deploy Succesfull!', to: 'safderun@proton.me')
+        }
+        failure {
+          mail bcc: '', body: '''Latest deploy for Coineus Server was failed!. 
+          Build Number: $BUILD_NUMBER''', cc: 'mlheymen.ms@gmail.com', from: 'Jenkins', replyTo: '', subject: '!!!Coineus Server Deploy Failed!!!', to: 'safderun@proton.me'
+        }
+    }
+
 }

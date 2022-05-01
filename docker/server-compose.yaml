@@ -4,6 +4,7 @@ services:
   # coineus-api
   coineus-api:
     image: "safderun/coineus-server:latest"
+    container_name: coineus-server
     environment:
       POSTGRE_DB_URI: postgres://postgres:postgres123@postgres:5432/coineusdb
       JWT_SIGNING_KEY: mysupersecretkey

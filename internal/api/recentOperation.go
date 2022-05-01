@@ -76,10 +76,21 @@ func AddOperationHandler(s storage.RecentOperationStore) fiber.Handler {
 			return c.SendStatus(fiber.StatusUnauthorized)
 		}
 
-		err = s.AddRecentOperation(operation)
-		if err != nil {
-			log.Println(err)
-			return c.SendStatus(fiber.StatusInternalServerError)
+		if op, err := s.GetRecentOperationByCoinSymbol(operation.CoinSymbol); err != nil && op.CoinSymbol == operation.CoinSymbol {
+			operation.BuyCost = ((op.BuyCost * op.CoinAmount) + operation.BuyCost*operation.CoinAmount) / operation.CoinAmount
+			operation.CoinAmount = op.CoinAmount + operation.CoinAmount
+
+			err = s.UpdateRecentOperation(operation)
+			if err != nil {
+				log.Println(err)
+				return c.SendStatus(fiber.StatusInternalServerError)
+			}
+		} else {
+			err = s.AddRecentOperation(operation)
+			if err != nil {
+				log.Println(err)
+				return c.SendStatus(fiber.StatusInternalServerError)
+			}
 		}
 
 		return c.JSON(model.Response{

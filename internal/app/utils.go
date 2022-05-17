@@ -71,7 +71,7 @@ type PriceServicePair struct {
 func SendNewPairToPriceService(pairSymbol string) error {
 	coins := strings.SplitN(pairSymbol, "/", 2)
 	resp, err := http.Post(
-		os.Getenv("PRICE_SERVICE_URL")+"/api/v1/pairs",
+		os.Getenv("PRICE_SERVICE_BASE_URL")+"/api/v1/pairs",
 		"application/json",
 		strings.NewReader(`{"ticker":"`+coins[0]+`","vs_currency":"`+coins[1]+`"}`))
 	if err != nil {

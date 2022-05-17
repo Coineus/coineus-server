@@ -37,6 +37,7 @@ func (r *Router) initRoutes() {
 	// Middlewares
 	// CORS
 	apiRouter.Use(cors.New())
+
 	// Logger
 	apiRouter.Use(logger.New(
 		logger.Config{

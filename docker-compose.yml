@@ -12,6 +12,7 @@ services:
       RETRY_COUNT: 5
       RETRY_COOLDOWN: 2
       PORT: 8000
+      PRICE_SERVICE_BASE_URL: coineus-price-service/
     depends_on:
       - postgres
     networks:

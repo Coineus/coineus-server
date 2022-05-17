@@ -2,9 +2,11 @@ package app
 
 import (
 	"log"
+	"net/http"
 	"net/mail"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/coineus/coineus-server/model"
@@ -59,4 +61,22 @@ func GetUserClaims(c *fiber.Ctx) model.User {
 		Email:    claims["email"].(string),
 	}
 	return userModel
+}
+
+type PriceServicePair struct {
+	Ticker     string `json:"ticker"`
+	VSCurrency string `json:"vs_currency"`
+}
+
+func SendNewPairToPriceService(pairSymbol string) error {
+	coins := strings.SplitN(pairSymbol, "/", 2)
+	resp, err := http.Post(
+		os.Getenv("PRICE_SERVICE_URL")+"/api/v1/pairs",
+		"application/json",
+		strings.NewReader(`{"ticker":"`+coins[0]+`","vs_currency":"`+coins[1]+`"}`))
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	return nil
 }

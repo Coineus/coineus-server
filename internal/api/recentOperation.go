@@ -93,6 +93,12 @@ func AddOperationHandler(s storage.RecentOperationStore) fiber.Handler {
 			}
 		}
 
+		err = app.SendNewPairToPriceService(operation.CoinSymbol)
+		if err != nil {
+			log.Println(err)
+			return c.SendStatus(fiber.StatusInternalServerError)
+		}
+
 		return c.JSON(model.Response{
 			Success: true,
 			Error:   "",

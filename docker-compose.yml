@@ -11,14 +11,14 @@ services:
       JWT_EXP_TIME: 96
       RETRY_COUNT: 5
       RETRY_COOLDOWN: 2
-      PRICE_SERVICE_BASE_URL: coineus-price-service/
+      PRICE_SERVICE_BASE_URL: http://coineus-price-service
       PORT: 80
     depends_on:
       - postgres
     networks:
       - coineus_network
     ports:
-      - 80:80
+      - 8080:80
 
 
   # db

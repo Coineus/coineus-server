@@ -29,7 +29,6 @@ pipeline{
           }
         }
         echo "Removing Docker Images"
-        sh "docker rmi $IMAGE_NAME"
         sh "docker rmi $IMAGE_NAME:$BUILD_NUMBER"
         sh "docker rmi $IMAGE_NAME:latest"
       }

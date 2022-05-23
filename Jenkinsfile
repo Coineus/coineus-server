@@ -3,25 +3,35 @@ pipeline{
   agent any
 
   environment {
-    dockerhub=credentials('dockerhub')
     IMAGE_NAME="safderun/coineus-server"
+    registryCredential = 'safderun-dockerhub'
+    dockerImage = ''
   }
 
   stages{
 
     stage('docker image build'){
       steps{
-        sh "docker image build -t $IMAGE_NAME:latest -f ./docker/Dockerfile.server ."
+        echo "Building docker image"
+        script{
+          dockerImage = docker.build IMAGE_NAME
+        }
       }
     }
 
     stage('docker image push'){
       steps{
-        sh "echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin"
-        sh "docker tag $IMAGE_NAME:latest $IMAGE_NAME:$BUILD_NUMBER"
-        sh "docker push $IMAGE_NAME:latest"
-        sh "docker push $IMAGE_NAME:$BUILD_NUMBER"
-        sh "docker rmi $IMAGE_NAME:$BUILD_NUMBER $IMAGE_NAME:latest"
+        echo "Pushing docker image"
+        script{
+          docker.withRegistry('', registryCredential){
+            dockerImage.push("$BUILD_NUMBER")
+            dockerImage.push("latest")
+          }
+        }
+        echo "Removing Docker Images"
+        sh "docker rmi $IMAGE_NAME"
+        sh "docker rmi $IMAGE_NAME:$BUILD_NUMBER"
+        sh "docker rmi $IMAGE_NAME:latest"
       }
     }
 
@@ -31,7 +41,8 @@ pipeline{
         SERVER_BUILD_NUMBER = "$BUILD_NUMBER"
       }
       steps{
-        sh "/coineus-server/update-server.sh"
+        sh "chmod +x -R ${env.WORKSPACE}"
+        sh "./docker/update-server.sh"
       }
     }
   }
